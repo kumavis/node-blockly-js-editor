@@ -1,0 +1,17 @@
+{
+  "name": "node-blockly",
+  "version": "0.0.0",
+  "description": "Scratch in the browser! blockly on node!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./node_modules/http-server/bin/http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "kumavis",
+  "license": "BSD",
+  "devDependencies": {
+    "http-server": "~0.5.3",
+    "soynode": "~0.3.0"
+  }
+}

@@ -1,11 +1,18 @@
-// Include Blockly Core
+// hotfix for browserify bugging out
+window.process = process
+
+// Modules Deps
+var createEditor = require('javascript-editor')
+
+//  Blockly Core Deps
 var codepage = require('./templates/template.soy.js')
 var MSG = require('./lib/MSG.js')
 var code_app = require('./lib/code.js')
 
+// Create module root object
 var Blockly = module.exports = {}
 
-// Required for cross-iframe communication
+// Pollute window - Required for cross-iframe communication
 window.Blockly = Blockly;
 
 // Called by consumer to insert the workspace into the DOM
@@ -21,11 +28,40 @@ Blockly.injectWorkspace = function( options ) {
     targetElement.appendChild( holder.firstChild )
   }
 
+  // Add in code editor
+  // create left and right sections
+  var editorContainer = document.querySelector('#content_javascript')
+  var left = document.createElement('div')
+  left.setAttribute("class","left")
+  editorContainer.appendChild(left)
+  var right = document.createElement('div')
+  right.setAttribute("class","right")
+  editorContainer.appendChild(right)
+  // inject editor
+  Blockly.editor = createEditor({
+    container: editorContainer,
+    injectStyles: true
+  })
+
+  Blockly.editor.on('change', function() {
+    var value = this.getValue()
+    console.log( value )
+  })
+
 }
 
 // Called from workspace iframe when ready
 Blockly.init = function(blockly) {
   code_app.init(blockly)
+}
+
+// Public methods
+Blockly.setCode = function(newCode) {
+  Blockly.editor.setValue(newCode)
+}
+
+Blockly.getCode = function(newCode) {
+  Blockly.editor.getValue(newCode)
 }
 
 // Patch commands from DOM into code_app
@@ -55,3 +91,6 @@ window.onload = function() {
   })
 
 }
+
+// ====================================
+

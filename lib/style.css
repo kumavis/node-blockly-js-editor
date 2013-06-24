@@ -71,7 +71,7 @@ table {
 td {
   padding: 0;
 }
-pre,
+/*pre,*/
 #content_xml {
   width: 100%;
   height: 100%;
@@ -128,7 +128,7 @@ button.disabled {
   display: none;
 }
 
-/* Sprited icons. */
+/* Sprited icons. 
 .trash {
   height: 21px;
   width: 21px;

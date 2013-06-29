@@ -1,13 +1,10 @@
-// hotfix for browserify bugging out
-window.process = process
-
 // Modules Deps
 var createEditor = require('javascript-editor')
 
 //  Blockly Core Deps
-var codepage = require('./templates/template.soy.js')
-var MSG = require('./lib/MSG.js')
-var code_app = require('./lib/code.js')
+var blocklyTemplate = require('./templates/template.soy.js')
+var MSG = require('./node_modules/blockly/lib/MSG.js')
+var code_app = require('./node_modules/blockly/lib/code.js')
 
 // Create module root object
 var Blockly = module.exports = {}
@@ -23,7 +20,7 @@ Blockly.injectWorkspace = function( options ) {
 
   // Build html into target div
   var holder = document.createElement('div');
-  holder.innerHTML = codepage.start({}, null, {MSG: MSG, frameSrc: frameSrc.join('&')});
+  holder.innerHTML = blocklyTemplate.start({}, null, {MSG: MSG, frameSrc: frameSrc.join('&')});
   while (holder.hasChildNodes()) {
     targetElement.appendChild( holder.firstChild )
   }
@@ -44,8 +41,7 @@ Blockly.injectWorkspace = function( options ) {
   })
 
   Blockly.editor.on('change', function() {
-    var value = this.getValue()
-    console.log( value )
+
   })
 
 }
@@ -65,6 +61,7 @@ Blockly.getCode = function(newCode) {
 }
 
 // Patch commands from DOM into code_app
+// TODO: remove
 Blockly.tabClick = function(id) {
   code_app.tabClick(id)
 }

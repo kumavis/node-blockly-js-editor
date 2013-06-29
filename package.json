@@ -1,13 +1,13 @@
 {
-  "name": "blockly",
+  "name": "blockly-js-editor",
   "version": "0.0.0",
-  "description": "Scratch in the browser! blockly on node!",
+  "description": "Write Javascript with Scratch-clone Blockly! or visa-versa!",
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/http-server/bin/http-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "",
+  "repository": "https://github.com/kumavis/node-blockly-js-editor",
   "author": "kumavis",
   "license": "BSD",
   "devDependencies": {
@@ -15,6 +15,7 @@
     "soynode": "~0.3.0"
   },
   "dependencies": {
+    "blockly": "git://github.com/kumavis/node-blockly.git#master",
     "javascript-editor": "git://github.com/kumavis/javascript-editor.git#master"
   }
 }

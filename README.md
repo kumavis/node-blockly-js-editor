@@ -8,6 +8,8 @@ its `Blockly` not `Blocky` (this was the source of numerous bugs during developm
 
 Start
 =====
-`node compile_soy.js`
-`browserify index.js >>| bundle.js`
-`npm start`
+```bash
+node compile_soy.js
+browserify index.js >> bundle.js
+npm start`
+```

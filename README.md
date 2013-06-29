@@ -1,3 +1,9 @@
+Example
+=======
+
+See the (example app)[https://github.com/kumavis/node-blockly-js-editor-example] for implementation
+
+
 Notes
 =====
 
@@ -9,7 +15,8 @@ its `Blockly` not `Blocky` (this was the source of numerous bugs during developm
 Start
 =====
 ```bash
-node compile_soy.js
-browserify index.js >> bundle.js
-npm start`
+browserify index.js -o bundle.js
+npm start
 ```
+
+use `node compile_soy.js` if you make a change to the template in `templates/template.soy`

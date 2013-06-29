@@ -75,19 +75,3 @@ Blockly.runJS = function() {
   code_app.runJS()
 }
 
-// === example (non-module code) ====
-
-// shortcut for Debug
-window._ = Blockly;
-
-
-window.onload = function() {
-
-  Blockly.injectWorkspace({
-    targetElement: document.getElementById("my_blockly_container")
-  })
-
-}
-
-// ====================================
-

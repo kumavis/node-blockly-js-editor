@@ -2,14 +2,19 @@ _TODO:
 ======
 [ ] turn into node module(s)
   [✓] push to git
-  [ ] test in sample proj as git dep
   [ ] split javascript editor and blockly core?
     [ ] core is a wrapper of the original repo + package.json + grunt build wrapper
+      [ ] dep original repo
+      [ ] make a grunt build system that sits on their build system, modifying source into modules as necesary
     [ ] editor
-      [ ] mbalho js editor
-      [ ] blockly editor
+      [✓] mbalho js editor
+      [✓] blockly editor
       [ ] widget injection
-      [ ] master controller (exposes .getCode, .setCode, etc)
+        [ ] css
+        [ ] img assets
+      [✓] master controller (exposes .getCode, .setCode, etc)
+    [ ] demo app
+      [ ] simple implementation, with get + set
 
 [ ] roundtrip js
   [ ] how are blocks defined?
@@ -20,19 +25,12 @@ _TODO:
   [ ] blocks for language features
 
 [ ] sanity
-  [X] Proper build tools
-    [X] blockly source builder? / use uncompressed?
-    [X] template compiler
-    [X] browserify
-  [X] shed unnecesary deps
-    [X] soy
-    [X] code_app
-    [X] sound + cursor files
   [ ] make readme newbie proof
   [ ] explain origin, purpose, deps, license
 
 [ ] write feelings about node + ui widgets + browserify
   [ ] style injection
+  [ ] img assets???
 
  - - - - - - - - - - - - - - - - - -
 

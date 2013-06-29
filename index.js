@@ -1,5 +1,6 @@
 // Modules Deps
 var createEditor = require('javascript-editor')
+var path = require('path')
 
 //  Blockly Core Deps
 var blocklyTemplate = require('./templates/template.soy.js')
@@ -20,7 +21,7 @@ Blockly.injectWorkspace = function( options ) {
 
   // Build html into target div
   var holder = document.createElement('div');
-  holder.innerHTML = blocklyTemplate.start({}, null, {MSG: MSG, dirname: __dirname, frameSrc: frameSrc.join('&')});
+  holder.innerHTML = blocklyTemplate.start({}, null, {MSG: MSG, framePathname: path.join(__dirname,"frame.html"), frameSrc: frameSrc.join('&')});
   while (holder.hasChildNodes()) {
     targetElement.appendChild( holder.firstChild )
   }

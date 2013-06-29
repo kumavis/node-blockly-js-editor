@@ -20,7 +20,7 @@ Blockly.injectWorkspace = function( options ) {
 
   // Build html into target div
   var holder = document.createElement('div');
-  holder.innerHTML = blocklyTemplate.start({}, null, {MSG: MSG, frameSrc: frameSrc.join('&')});
+  holder.innerHTML = blocklyTemplate.start({}, null, {MSG: MSG, dirname: __dirname, frameSrc: frameSrc.join('&')});
   while (holder.hasChildNodes()) {
     targetElement.appendChild( holder.firstChild )
   }

@@ -1,0 +1,44 @@
+Making the try-catch block:
+
+[ ] Need a couple forms Try-Catch, Try-Finally, Try-Catch-Finally
+  [ ] Need to be able to specify the catch variable name
+    - the FieldTextInput constructor can also take a second argument which becomes the validation function or change handler. ( See ex: math_number )
+    - Another title element is a variable selection menu. The FieldVariable object is created with the default variable name to use (in this case 'item'). If this name is omitted, the variable will be a new unique variable (e.g. 'i', 'j', 'k'...).
+    ^ "var variable = new Blockly.FieldVariable('item'); input.appendTitle(variable, 'VAR');"
+
+
+
+├─ type: Program
+└─ body
+   └─ 0
+      ├─ type: ExpressionStatement
+      └─ expression
+         ├─ type: CallExpression
+         ├─ callee
+         │  ├─ type: MemberExpression
+         │  ├─ computed: false
+         │  ├─ object
+         │  │  ├─ type: Identifier
+         │  │  └─ name: console
+         │  └─ property
+         │     ├─ type: Identifier
+         │     └─ name: log
+         └─ arguments
+            └─ 0
+               ├─ type: Literal
+               └─ value: hello
+
+AssignmentExpression
+ArrayExpression
+BinaryExpression
+CallExpression
+ConditionalExpression
+FunctionExpression
+LogicalExpression
+MemberExpression
+NewExpression
+ObjectExpression
+SequenceExpression
+ThisExpression
+UnaryExpression
+UpdateExpression

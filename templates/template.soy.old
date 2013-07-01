@@ -32,6 +32,7 @@
         {call .toolbox /}
         <iframe id="content_blocks" src="{$ij.framePathname}?{$ij.frameSrc}"></iframe>
         <pre id="content_javascript"></pre>
+        <pre id="content_python"></pre>
         <div id="content_xml">
           <textarea id="textarea_xml"></textarea>
         </div>
@@ -45,12 +46,6 @@
  */
 {template .toolbox}
   <xml id="toolbox" style="display: none">
-
-    <category name="basic javascript language features">
-      <block type="jslang_try_catch"></block>
-      <block type="jslang_call"></block>
-    </category>
-
     <category name="{$ij.MSG.catControl}">
       <block type="controls_if"></block>
       <block type="controls_repeat_ext">

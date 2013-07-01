@@ -1,3 +1,23 @@
+NodeConf
+========
+
+1) return speakers to {twitter: reid}
+
+- - - - - - - - - - - - - - - - - - -
+
+[✓] add custom block to menu
+[✓] add block definition
+[ ] parse code into mother-fatherin' blocks
+  [✓] pattern matching from current node a.k.a. does current node match
+  [ ] navigate js->blocks, compile blocks
+  [ ] write signatures
+    
+[ ] profit
+
+SUPRISINGLY EASY
+
+- - - - - - - - - - - - - - - - - - -
+
 _TODO:
 ======
 [ ] turn into node module(s)
@@ -30,6 +50,7 @@ _TODO:
   [ ] explain origin, purpose, use-cases, deps, license
 
 [ ] figure out widget injection
+  [ ] html files pointing to js, how to resolve the pathname (see frame.html)
   [ ] blog about node + ui widgets + browserify
   [ ] style injection
   [ ] img assets???

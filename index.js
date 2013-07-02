@@ -8,12 +8,15 @@ var treeify = require('treeify')
 var esprima = require('esprima')
 
 //  Blockly Core Deps
+var initBlocklyCore = require('./node_modules/blockly/lib/blockly_compressed.js')
 var MSG = require('./node_modules/blockly/lib/MSG.js')
 var code_app = require('./node_modules/blockly/lib/code.js')
+var initEnglish = require('./node_modules/blockly/lib/en_compressed.js')
 
 //  Blockly JSEditor Deps
 var blocklyTemplate = require('./templates/template.soy.js')
-var jslangInit = require('./language/jslang.js')
+var initJsGenerator = require('./node_modules/blockly/lib/javascript_compressed.js')
+var initJslang = require('./language/jslang.js')
 Blockly.util = require('./util.js')
 
 // Pollute window - Required for cross-iframe communication
@@ -56,11 +59,13 @@ Blockly.injectWorkspace = function( options ) {
 }
 
 // Called from workspace iframe when ready
-Blockly.init = function(blockly) {
-  // Recieve core
-  Blockly.core = blockly
+Blockly.init = function(frameWindow) {
+  Blockly.core = initBlocklyCore(frameWindow)
+  initJsGenerator(frameWindow,Blockly.core)
+  initWorkspace(frameWindow,Blockly.core)
+  initEnglish(frameWindow,Blockly.core)
   // Initialize basic JS Language definitions (Blocks + Generators)
-  jslangInit(Blockly)
+  initJslang(Blockly)
   // Init App (UI stuff etc)
   code_app.init(Blockly.core)
 }
@@ -134,4 +139,22 @@ function injectStyle( pathname ) {
   linkTag.setAttribute("href", pathname)
   linkTag.setAttribute("onload", "Blockly.refresh()")
   document.getElementsByTagName("head")[0].appendChild(linkTag)
+}
+
+function initWorkspace(window,Blockly) {
+  (function(){
+    var document = window.document
+    var rtl = false;
+    var toolbox = null;
+    if (window.parent.document) {
+      // document.dir fails in Mozilla, use document.body.parentNode.dir.
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=151407
+      rtl = window.parent.document.body.parentNode.dir == 'rtl';
+      toolbox = window.parent.document.getElementById('toolbox');
+    }
+    Blockly.inject(document.body,
+        {path: '../../',
+         rtl: rtl,
+         toolbox: toolbox});
+  }).bind(window)()
 }

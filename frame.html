@@ -2,8 +2,6 @@
 <head>
   <meta charset="utf-8">
   <title>Blockly Code</title>
-  <script type="text/javascript" src="/node_modules/blockly/lib/blockly_compressed.js"></script>
-  <script type="text/javascript" src="javascript_compressed.js"></script>
   <style>
     html, body {
       background-color: #fff;
@@ -17,38 +15,10 @@
     }
   </style>
   <script>
-    (function() {
-      // Load the language-specific files listed on the URL.
-      var files =
-          decodeURIComponent(window.location.search.substring(1)).split('&');
-      for (var x = 0; x < files.length; x++) {
-        var file = files[x];
-        if (file.match(/^\w+\.js$/)) {
-          document.writeln('<script type="text/javascript" ' +
-              'src="' + file + '"><' + '/script>');
-        } else {
-          console.error('Illegal language file: ' + file);
-        }
-      }
-    })();
-
     function init() {
-      var rtl = false;
-      var toolbox = null;
-      if (window.parent.document) {
-        // document.dir fails in Mozilla, use document.body.parentNode.dir.
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=151407
-        rtl = window.parent.document.body.parentNode.dir == 'rtl';
-        toolbox = window.parent.document.getElementById('toolbox');
-      }
-      Blockly.inject(document.body,
-          {path: '../../',
-           rtl: rtl,
-           toolbox: toolbox});
-
       if (window.parent.Blockly) {
         // Let the top-level application know that Blockly is ready.
-        window.parent.Blockly.init(Blockly);
+        window.parent.Blockly.init(window);
       } else {
         // Attempt to diagnose the problem.
         var msg = 'Error: Unable to communicate between frames.\nIs window.Blocky exposed?\n\n';

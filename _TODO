@@ -1,20 +1,86 @@
-NodeConf
-========
 
-1) return speakers to {twitter: reid}
 
 - - - - - - - - - - - - - - - - - - -
 
-[✓] add custom block to menu
-[✓] add block definition
-[ ] parse code into mother-fatherin' blocks
-  [✓] pattern matching from current node a.k.a. does current node match
-  [ ] navigate js->blocks, compile blocks
-  [ ] write signatures
-    
-[ ] profit
+requireBin integration
+======================
 
-SUPRISINGLY EASY
+[ ] publish to npm, or update github
+  [ ] update blockly core from node_modules
+[ ] finish basic language features
+  [ ] AssignmentExpression
+    [✓] =
+    [ ] +=, -=
+  [✓] ReturnStatement
+  [✓] IfStatement
+    [✓] recusrively search for if-else statements
+  [ ] BinaryExpression      ***
+    [✓] basic math
+    [ ] implement '%' and other binary ops
+  [ ] BreakStatement
+  [ ] CatchClause
+  [ ] ConditionalExpression      ***
+  [ ] ContinueStatement
+  [ ] DoWhileStatement      ***
+  [ ] DebuggerStatement
+  [ ] EmptyStatement
+  [ ] ForStatement
+  [ ] ForInStatement
+  [ ] FunctionDeclaration      ***
+  [ ] LabeledStatement
+  [ ] LogicalExpression     ***
+   [ ] && ||
+  [ ] NewExpression      ***
+  [ ] Property
+  [ ] SequenceExpression
+  [ ] SwitchStatement
+  [ ] SwitchCase      ***
+  [✓] ThisExpression      ***
+  [ ] ThrowStatement
+  [ ] UnaryExpression      ***
+    [ ] ~
+    [ ] - +
+    [✓] !
+  [ ] UpdateExpression      ***
+    [ ] ++ --
+  [✓] VariableDeclarator
+  [ ] WhileStatement
+  [ ] WithStatement
+[ ] Node blocks
+  [ ] module.exports
+  [ ] process
+
+- - - - - - - - - - - - - - - - - - -
+
+[ ] 
+[ ] side by side blocks+js
+[ ] write signatures for basic language features
+  [ ] variable declaration
+    [ ] var name validator
+    [✓] var statements
+  [✓] mutators - how do they work
+  [✓] chain member statements
+    [✓] a.b.c
+    [✓] a.b().c
+    [✓] a().b.c
+  [✓] call statements
+    [✓] a()
+    [✓] mutate args
+  [✓] anon func
+  [✓] AssignmentExpression
+    [✓] a =
+    [✓] a.b =
+[ ] sort patterns by complexity->simplicity, so that more complex patterns take precendence 
+  [ ] make a complexity ranker
+  [ ] on register, order correctly
+[ ] try to keep js returning to its original form
+[ ] show comments, either using the comment ding or more explicitly (as blocks?)
+[✓] call args mutator
+[✓] anon func change args, get renamed
+[✓] node_event on("whatevs")
+[ ] console.log("whatevs")
+[✓] function name
+[✓] extraeneous var appended to top
 
 - - - - - - - - - - - - - - - - - - -
 
@@ -37,35 +103,38 @@ _TODO:
     [ ] demo app
       [ ] simple implementation, with get + set
 
-[ ] roundtrip js
-  [ ] how are blocks defined?
-  [ ] how to start with a block in the field
+[✓] roundtrip js
+  [✓] how are blocks defined?
+  [✓] how to start with a block in the field
   [✓] decent js code editor
     [✓] workspaceUpdate -> js_string -> editor
-  [ ] AST -> blocks
-  [ ] blocks for language features
+  [✓] AST -> blocks
+  [✓] blocks for language features
 
 [ ] sanity
   [ ] make readmes newbie proof
   [ ] explain origin, purpose, use-cases, deps, license
 
 [ ] figure out widget injection
-  [ ] html files pointing to js, how to resolve the pathname (see frame.html)
+  [✓] html files pointing to js, how to resolve the pathname (see frame.html)
   [ ] blog about node + ui widgets + browserify
-  [ ] style injection
+  [✓] style injection
   [ ] img assets???
 
  - - - - - - - - - - - - - - - - - -
+ %%% IDEAS %%%
 
-High Level
-==========
+Useability
+- for simple things, mutate via buttons instead of a mutation window
 
-[ ] figure out widget injection
-[X] simplify blockly editor
-  "iframe allows the workspace to be resizeable"
-  https://groups.google.com/forum/#!searchin/blockly/iframe/blockly/oVrx53mPnXw/Gbvrk6zyxUYJ
-[ ] figure out how to define blocks
-  https://code.google.com/p/blockly/wiki/DefiningBlocks
+Side by Side: "code + blocks"
+- mouse over block to see corresponding code (and visaversa)
+- mouse over variable shows other usages of the same variable
+- unified (block+code) history (undo/command-z)
+
+Refactor:
+- Blocks should generate AST, which then generates code
+
 
  - - - - - - - - - - - - - - - - - -
 

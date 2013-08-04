@@ -1,6 +1,6 @@
 {
   "name": "blockly-js-editor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Write Javascript with Scratch-clone Blockly! or visa-versa!",
   "main": "index.js",
   "scripts": {
@@ -15,9 +15,10 @@
   },
   "dependencies": {
     "blockly": "git://github.com/kumavis/node-blockly.git#master",
-    "javascript-editor": "git://github.com/kumavis/javascript-editor.git#master",
+    "javascript-editor": "git://github.com/maxogden/javascript-editor.git#master",
     "pattern-match": "~0.3.0",
     "treeify": "~1.0.1",
-    "esprima": "~1.0.3"
+    "esprima": "~1.0.3",
+    "xml-mapping": "~1.2.1"
   }
 }

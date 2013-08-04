@@ -1,7 +1,7 @@
 var fs = require('fs')
 var soynode = require('soynode')
 var path = require('path')
-var blocklyPath = path.dirname( require.resolve('blockly') )
+var blocklyPath = path.resolve('./node_modules/blockly')
 
 var tmpDir = './tmp/templates'
 var outputDir = './templates'

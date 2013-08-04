@@ -3,16 +3,17 @@ module.exports = {
   registerBlockSignature: registerBlockSignature,
   convertAstNodeToBlocks: convertAstNodeToBlocks,
   jsToBlocklyXml: jsToBlocklyXml,
-  appendBlock: appendBlock,
+  appendInNewTag: appendInNewTag,
+  appendTagDeep: appendTagDeep,  
 }
 
 // Module Dependencies
 var esprima = require('esprima')
-var treeify = require('treeify')
 var patternMatch = require('pattern-match')
+var xmlMap = require('xml-mapping')
 
 // Initialization
-var blockSignatures = {}
+var blockSignatures = window._sigs = {}
 
 function jsToBlocklyXml(source) {
   var ast = esprima.parse(source)
@@ -30,7 +31,7 @@ function convertAstNodeToBlocks(ast) {
   var signatures = blockSignatures[ast.type] || []
 
   // Find and return the first matching result
-  signatures.some(function(sig) {
+  signatures.slice().reverse().some(function(sig) {
     result = checkMatch(ast, sig);
     // exit loop if result found 
     return !!result
@@ -40,7 +41,7 @@ function convertAstNodeToBlocks(ast) {
   if (result) return result
 
   // Match was not found
-  throw 'matching signature NOT FOUND for "'+ast.type+'". registered block signatures:\n'+treeify.asTree(blockSignatures,true)
+  throw 'matching signature NOT FOUND for "'+ast.type+'"'
 }
 
 // return the match if found, or return false
@@ -53,10 +54,7 @@ function checkMatch(node, signature) {
   } catch(err) {
     if (typeof err === 'string') {
       console.log(err)
-    } else {
-      console.log( treeify.asTree(err,true) )
     }
-    console.log("non-matching pattern")
     return false
   }
 }
@@ -72,14 +70,73 @@ function registerBlockSignature(pattern, xmlGenerator) {
   signaturesForType.push({ pattern: pattern, xmlGenerator: xmlGenerator })
 }
 
-function appendBlock(parent, child) {
-  var parentNewValue
-  if (typeof parent === 'string') {
-    // Before Closing Tag, Append 'next' tag with child embedded
-    var closetagIndex = parent.lastIndexOf('<')
-    parentNewValue = parent.slice(0,closetagIndex)+'<next>'+child+'</next>'+parent.slice(closetagIndex)
-  } else {
-    parentNewValue = child
-  }
+// Appends the `child` to the `parent` inside a tag of type `tag` optionally with tag attributes `args`
+// Should be fast - we're not parsing the whole parent or child
+function appendInNewTag(parent, child, tag, args) {
+  // Ensure valid input
+  if ((typeof parent !== 'string') || (typeof child !== 'string') || !tag) throw "`appendInNewTag` received invalid input: "+arguments
+  // set defaults
+  if (!Array.isArray(args)) args = [args]
+  args = args || []
+  // Before Closing Tag, Append tag with child embedded
+  var closetagIndex = parent.lastIndexOf('</block>')
+  var tagWithChild = '<'+tag
+  if (args.length) tagWithChild += ' '+args.join(" ")
+  tagWithChild += '>'+child+'</'+tag+'>'
+  var parentNewValue = parent.slice(0,closetagIndex)+tagWithChild+parent.slice(closetagIndex)
   return parentNewValue
 }
+
+// Appends `child` to `parent` or its deepest child if tag of type `tag` and "name" attribute equal to `tagName` present
+// Appends to parent unless it has tag+tagName, then it tries the child in that tag, and possibly its children
+function appendTagDeep(parent, child, tag, tagName) {
+  // Ensure valid input
+  if ((typeof parent !== 'string') || (typeof child !== 'string') || !tag) throw "`appendTagDeep` received invalid input: "+arguments
+  // Dig out target
+  var parentObj = xmlMap.load(parent)
+  var targetObj = parentObj.block
+  
+  var continueInteration = true
+  while( continueInteration ) {
+    // check to see if we should close the loop
+    if (!targetObj[tag]) {
+      continueInteration = false
+      break
+    }
+    // for many tags, check each
+    if (Array.isArray(targetObj[tag]))
+    {
+      var found = false
+      targetObj[tag].forEach(function(tagEntry){
+        // check name, if found set as new target
+        if (tagEntry.name === tagName) {
+          targetObj = tagEntry.block
+          found = true
+        }
+      })
+      // if nothing found, stop iteration
+      if (found==false) continueInteration = false
+    }
+    // for single tag, check name
+    else if (targetObj[tag].name === tagName) {
+      targetObj = targetObj[tag].block
+    }
+    // tag exists, but does not match tagName
+    else {
+      continueInteration = false
+    }
+  }
+
+  // if tag exists
+  if (targetObj[tag]) {
+    // and there is only one such tag, prepare for multiple
+    if (!Array.isArray(targetObj[tag])) targetObj[tag] = [targetObj[tag]]
+  } else {
+    // otherwise set to empty array
+    targetObj[tag] = []
+  }
+  // Append child in target in new tag with name set
+  targetObj[tag].push({ name: tagName, block: xmlMap.load(child).block })
+  return xmlMap.dump(parentObj)
+}
+

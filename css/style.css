@@ -1,29 +1,16 @@
-/**
- * Visual Blocks Editor
- *
- * Copyright 2012 Google Inc.
- * http://blockly.googlecode.com/
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 /**
- * @fileoverview Style sheet for Blockly code demo (langaue-neutral).
- * @author fraser@google.com (Neil Fraser)
+ * @fileoverview Style sheet for Blockly javascript-roundtripping editor. contains content by fraser@google.com (Neil Fraser)
+ * @author kumavis
  */
+
+html, body, #editor { height: 100%; }
+
 body {
   background-color: white;
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 h1 {
   font-weight: normal;
@@ -146,4 +133,19 @@ button.disabled {
   width: 21px;
   background-image: url(icons.png);
   background-position: -63px -21px;
-}
+}*/
+
+/* mysterious pre */
+body > pre { display: none } 
+
+/*.left, .right { height: 100%; overflow: visible; display: block; float: left; position: relative; width: 50%; }*/
+.left, .right { height: 100%; overflow: visible; display: block; float: left; position: relative; width: 100%; }
+.right { background: #eee; }
+/* codemirror */
+.CodeMirror { font-size:20px; }
+
+@media all and (max-width: 800px) { .CodeMirror { font-size: 14px !important; } }
+
+#content_javascript .errorLine { background: rgba(255,0,0,0.25); }
+
+.CodeMirror-scroll { overflow: auto; }

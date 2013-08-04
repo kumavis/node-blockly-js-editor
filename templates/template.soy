@@ -14,9 +14,6 @@
       <td>
         <table>
           <tr id="tabRow" height="1em">
-            <td id="tab_blocks" class="tabon" onclick="Blockly.tabClick(this.id)">{$ij.MSG.blocks}</td>
-            <td class="tabmin">&nbsp;</td>
-            <td id="tab_javascript" class="taboff" onclick="Blockly.tabClick(this.id)">JavaScript</td>
             <td class="tabmin">&nbsp;</td>
             <td class="tabmax">
               <button title="{$ij.MSG.trashTooltip}" onclick="Blockly.discard(); Blockly.renderContent();">
@@ -31,10 +28,12 @@
       <td height="99%">
         {call .toolbox /}
         <iframe id="content_blocks" src="{$ij.framePathname}?{$ij.frameSrc}"></iframe>
-        <pre id="content_javascript"></pre>
         <div id="content_xml">
           <textarea id="textarea_xml"></textarea>
         </div>
+      </td>
+      <td>
+        <pre id="content_javascript"></pre>
       </td>
     </tr>
   </table>
@@ -49,6 +48,15 @@
     <category name="basic javascript language features">
       <block type="jslang_try_catch"></block>
       <block type="jslang_call"></block>
+      <block type="jslang_member_chain"></block>
+      <block type="jslang_identifier"></block>
+      <block type="jslang_statement_nub"></block>
+      <block type="jslang_var"></block>
+      <block type="jslang_object"></block> 
+    </category>
+
+    <category name="node features">
+      <block type="node_require"></block>
     </category>
 
     <category name="{$ij.MSG.catControl}">

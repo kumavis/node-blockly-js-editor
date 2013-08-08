@@ -20,3 +20,8 @@ npm start
 ```
 
 use `node compile_soy.js` if you make a change to the template in `templates/template.soy`
+
+
+Attribs (these need to be added to the app)
+=======
+<a href="http://thenounproject.com/noun/trash-can/#icon-No3875" target="_blank">Trash Can</a> designed by <a href="http://thenounproject.com/nifanic" target="_blank">Nick Nifadéff</a> from The Noun Project

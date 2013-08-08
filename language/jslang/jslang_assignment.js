@@ -8,15 +8,15 @@ module.exports = function(Blockly,patternMatch) {
 
   // For getting a property of an object
   Blockly.core.Language.jslang_assignment = {
-  helpUrl: '',
-  init: function() {
-    this.setColour(0);
-    this.appendValueInput("RIGHT")
-        .appendTitle("=");
-    this.setOutput(true, "null");
-    this.setTooltip('');
-  }
-};
+    helpUrl: '',
+    init: function() {
+      this.setColour(0);
+      this.appendValueInput("RIGHT")
+          .appendTitle("=");
+      this.setOutput(true, "null");
+      this.setTooltip('');
+    }
+  };
 
   // ===
   // = JS -> Blocks

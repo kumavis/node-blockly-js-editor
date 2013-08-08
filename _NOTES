@@ -1,44 +1,85 @@
-Making the try-catch block:
+//  - block definition
+//  - code to block
+//  - block to code
+//  
+//  - block definition
+//  - code-block linkage
+//    - ast to block
+//    - block to ast
+//  
+//  
+//    block -> xml -> xmlObj [->] ast
+//    ast [->] xmlObj -> xml -> block
+//  
+//  ===
+//  == AST
+//  ===
+//  
+//    ├─ type: VariableDeclaration
+//    ├─ declarations
+//    │  └─ 0
+//    │     ├─ type: VariableDeclarator
+//    │     ├─ id
+//    │     │  ├─ type: Identifier
+//    │     │  └─ name: x
+//    │     └─ init
+//    │        ├─ type: Literal
+//    │        ├─ value: 10
+//    │        └─ raw: '10'
+//    └─ kind: var
+//  
+//  ===
+//  == XML OBJ
+//  ===
+//  
+//  
+//  
+//  ===
+//  == XML
+//  ===
+//  
+//    <block type="jslang_var" inline="false" x="0" y="0">
+//      <title name="VAR">x</title>
+//    </block>
 
-[ ] Need a couple forms Try-Catch, Try-Finally, Try-Catch-Finally
-  [ ] Need to be able to specify the catch variable name
-    - the FieldTextInput constructor can also take a second argument which becomes the validation function or change handler. ( See ex: math_number )
-    - Another title element is a variable selection menu. The FieldVariable object is created with the default variable name to use (in this case 'item'). If this name is omitted, the variable will be a new unique variable (e.g. 'i', 'j', 'k'...).
-    ^ "var variable = new Blockly.FieldVariable('item'); input.appendTitle(variable, 'VAR');"
+var treeify = require('treeify')
+var esprima = require('esprima')
+var escodegen = require('escodegen')
+var xmlMapping = require('xml-mapping')
+var html = require("html");
+
+var targetXml = '<block type="jslang_var" inline="false" x="0" y="0"><title name="VAR">x</title></block>'
+
+var src = "var x = \'10\'"
+
+var parseOptions = {
+  raw:true,
+//  loc:true,
+//  range:true,
+//  tokens:true,
+//  comment:true,
+}
+var genOptions = {
+  comment:true,
+}
+
+var syntax = esprima.parse(src,parseOptions).body[0]
+var recode = escodegen.generate(syntax,genOptions)
+
+var output = console.log
+
+output( '--- src' )
+output( src )
+output()
+output( '--- ast' )
+output( treeify.asTree(syntax,true) )
+output()
+output( '--- naive xml' )
+output( html.prettyPrint(xmlMapping.dump(syntax)) )
+output()
+output( '--- target xml' )
+output( html.prettyPrint(targetXml) )
 
 
 
-├─ type: Program
-└─ body
-   └─ 0
-      ├─ type: ExpressionStatement
-      └─ expression
-         ├─ type: CallExpression
-         ├─ callee
-         │  ├─ type: MemberExpression
-         │  ├─ computed: false
-         │  ├─ object
-         │  │  ├─ type: Identifier
-         │  │  └─ name: console
-         │  └─ property
-         │     ├─ type: Identifier
-         │     └─ name: log
-         └─ arguments
-            └─ 0
-               ├─ type: Literal
-               └─ value: hello
 
-AssignmentExpression
-ArrayExpression
-BinaryExpression
-CallExpression
-ConditionalExpression
-FunctionExpression
-LogicalExpression
-MemberExpression
-NewExpression
-ObjectExpression
-SequenceExpression
-ThisExpression
-UnaryExpression
-UpdateExpression

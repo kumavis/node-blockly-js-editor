@@ -1,3 +1,15 @@
+/*
+// Blockly-JsEditor
+//
+//  - Consumer calls injectWorkspace
+//  - this loads in the template including the iframe'd workspace
+//  - on load, iframe calls Blockly.init to complete
+//
+//  - user modifies blocks or code 
+//  - blocks and code are sync'd
+//
+*/
+
 // Create module root object
 var Blockly = module.exports = {}
 
@@ -39,45 +51,15 @@ Blockly.injectWorkspace = function( options ) {
   if (options.injectStyles) injectStyles(['./css/style.css','./css/codemirror.css','./css/theme.css'])
 
   // Prepare for code editor
-  // create left and right sections
+  // build DOM for left and right sections
   var editorContainer = document.querySelector('#content_javascript')
   var left = document.createElement('div')
   left.setAttribute("class","left")
   editorContainer.appendChild(left)
-  // var right = document.createElement('div')
-  // right.setAttribute("class","right")
-  // editorContainer.appendChild(right)
 
   // inject editor
   Blockly.editor = createEditor({
     container: editorContainer,
-  })
-
-  // On JS-update, after error-checking
-  Blockly.editor.on('valid', function(noErrors) {
-    if (noErrors) {
-      // Update Blocks from JS
-
-      var jsText = Blockly.getCode();
-      var xmlText = Blockly.util.jsToBlocklyXml(jsText);
-      var xmlDom = null;
-      try {
-        xmlDom = Blockly.core.Xml.textToDom(xmlText);
-      } catch (e) {
-        var q =
-            window.confirm(MSG.badXml.replace('%1', e));
-        if (!q) {
-          // Leave the user on the XML tab.
-          return;
-        }
-      }
-      if (xmlDom) {
-        Blockly.core.mainWorkspace.clear();
-        Blockly.core.Xml.domToWorkspace(Blockly.core.mainWorkspace, xmlDom);
-      }
-      Blockly.renderContent()
-
-    }
   })
 
 }
@@ -92,16 +74,19 @@ Blockly.init = function(frameWindow) {
   initLanguageBlocks(Blockly)
 
   // setup a blockly-changed callback
-  var triggerBlocklyChange = debounce(Blockly.onBlocklyChange, 500, false)
-  wrapFunctionAtPath('Blockly.core.BlockSvg.prototype.render',function(){
-    console.log('render -- debouncing')
-    triggerBlocklyChange()
+  Blockly.core.addChangeListener(Blockly.onBlocklyChange);
+
+  // setup a cellback for JS-update, after error-checking
+  Blockly.editor.on('valid', function(noErrors) {
+    if (noErrors) Blockly.onJsChange()
   })
   
+  // give cursor focus in editor
   Blockly.editor.editor.focus()
 
   // Init App (UI stuff etc)
   code_app.init(Blockly.core)
+
 }
 
 // ===
@@ -135,13 +120,33 @@ window._xml = function(src) {
 // ===
 
 Blockly.setCode = function(newCode) {
-  if (newCode != Blockly.getCode()) Blockly.editor.setValue(newCode)
+  Blockly.editor.setValue(newCode)
 }
 Blockly.getCode = function() {
   return Blockly.editor.getValue()
 }
 Blockly.refresh = function(newCode) {
   Blockly.editor.refresh()
+}
+
+Blockly.toggleToolbox = function(){
+  var toolbox = queryToolbox()
+  if (toolbox.style.display === "none")
+    Blockly.showToolbox(toolbox)
+  else
+    Blockly.hideToolbox(toolbox)
+}
+Blockly.showToolbox = function(toolbox){
+  toolbox = toolbox || queryToolbox()
+  toolbox.style.display = "block"
+}
+Blockly.hideToolbox = function(toolbox){
+  toolbox = toolbox || queryToolbox()
+  toolbox.style.display = "none"
+}
+
+function queryToolbox() {
+  return document.getElementById('content_blocks').contentDocument.querySelector('.blocklyToolboxDiv')
 }
 
 // Patch commands from DOM (embedded event handlers) into code_app
@@ -151,6 +156,7 @@ Blockly.tabClick = function(id) {
 }
 Blockly.discard = function() {
   code_app.discard()
+  code_app.renderContent();
 }
 Blockly.renderContent = function() {
   code_app.renderContent()
@@ -159,9 +165,45 @@ Blockly.runJS = function() {
   code_app.runJS()
 }
 
+// Blocks have changed
 Blockly.onBlocklyChange = function() {
-  console.log('updating code from blocks')
-  Blockly.setCode(Blockly.core.Generator.workspaceToCode('JavaScript'))
+  if (Blockly.ignoreNextBlocklyChange)
+  {
+    Blockly.ignoreNextBlocklyChange = false
+  } else {
+    console.log('updating code from blocks')
+    Blockly.ignoreNextJsChange = true
+    Blockly.setCode(Blockly.core.Generator.workspaceToCode('JavaScript'))
+  }
+}
+
+// JS has changed
+Blockly.onJsChange = function() {
+  if (Blockly.ignoreNextJsChange) {
+    Blockly.ignoreNextJsChange = false
+  } else {
+    console.log('updating blocks from code')
+    Blockly.ignoreNextBlocklyChange = true
+    // Code to Blocks
+    var jsText = Blockly.getCode();
+    var xmlText = Blockly.util.jsToBlocklyXml(jsText);
+    var xmlDom = null;
+    try {
+      xmlDom = Blockly.core.Xml.textToDom(xmlText);
+    } catch (e) {
+      var q =
+          window.confirm(MSG.badXml.replace('%1', e));
+      if (!q) {
+        // Leave the user on the XML tab.
+        return;
+      }
+    }
+    if (xmlDom) {
+      Blockly.core.mainWorkspace.clear();
+      Blockly.core.Xml.domToWorkspace(Blockly.core.mainWorkspace, xmlDom);
+    }
+    Blockly.renderContent()
+  }
 }
 
 // ===
@@ -200,48 +242,4 @@ function initWorkspace(window,Blockly) {
          rtl: rtl,
          toolbox: toolbox});
   }).bind(window)()
-}
-
-// debugging tool, wraps a method
-// usage:     wrapForDebugging('Blockly.core.Xml.render',function(){...})
-function wrapFunctionAtPath(targetPath,before,after) {
-  var targetParent = window
-  var targetSegments = targetPath.split('.')
-  lastSegment = targetSegments.slice(-1)[0]
-  targetSegments.slice(0,-1).forEach(function(pathSegment){
-    targetParent = targetParent[pathSegment]
-  })
-  var target = targetParent[lastSegment]
-  targetParent[lastSegment] = function(){
-    if (before) before() //.bind(this)
-    target.apply(this,arguments)
-    if (after) after() //.bind(this)
-  }
-}
-
-// debounce func from http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
-function debounce(func, threshold, execAsap) {
-    var timeout; // handle to setTimeout async task (detection period)
-    // return the new debounced function which executes the original function only once
-    // until the detection period expires
-    return function debounced () {
-        var obj = this, // reference to original context object
-            args = arguments; // arguments at execution time
-        // this is the detection function. it will be executed if/when the threshold expires
-        function delayed () {
-            // if we're executing at the end of the detection period
-            if (!execAsap)
-                func.apply(obj, args); // execute now
-            // clear timeout handle
-            timeout = null; 
-        };
-        // stop any current detection period
-        if (timeout)
-            clearTimeout(timeout);
-        // otherwise, if we're not already waiting and we're executing at the beginning of the detection period
-        else if (execAsap)
-            func.apply(obj, args); // execute now
-        // reset the detection period
-        timeout = setTimeout(delayed, threshold || 100); 
-    };
 }

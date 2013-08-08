@@ -1,4 +1,17 @@
+[ ] require bin fork
+  [ ] inject styles
+  [ ] make api closer to js-editor
+    [ ] emit events, bro
 
+- - - - - - - - - - - - - - - - - - -
+
+[ ] fix the back and forth craziness
+  [ ] hide literal details in block meta data
+  [✓] better blockly-did-change handling
+  [✓] add returning didUpdate event ignore flag
+  [ ] have a "program" in the workspace, to allow for construction / strewing pieces about
+    [ ] ignore changes to non-program dom
+    [ ] build blocks into the program container
 
 - - - - - - - - - - - - - - - - - - -
 

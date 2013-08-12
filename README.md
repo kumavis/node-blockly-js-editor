@@ -1,4 +1,3 @@
-
 About
 =====
 
@@ -12,7 +11,7 @@ soo WIP
 Setup
 =====
 
-This is a node project. You will need [node][http://nodejs.org/] installed.
+This is a node project. You will need [node](0) and [npm](1) installed.
 
 1. clone the repo
 ```bash
@@ -40,3 +39,6 @@ Notes
 =====
 
 use `node compile_soy.js` if you make a change to the template in `templates/template.soy`
+
+[0]: http://nodejs.org/
+[1]: https://npmjs.org/

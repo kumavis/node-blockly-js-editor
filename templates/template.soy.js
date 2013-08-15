@@ -1,4 +1,4 @@
-var soy = require('/Users/kumavis/Dropbox/Development/Node/node-blockly-js-editor/node_modules/blockly/lib/_soy/soyutils.js').soy;
+var soy = require('../node_modules/soynode').soy;
 
 // This file was automatically generated from template.soy.
 // Please don't edit this file by hand.

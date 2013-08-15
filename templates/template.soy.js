@@ -1,4 +1,4 @@
-var soy = require('../node_modules/soynode').soy;
+var soy = require('/Users/somniac/Projects/node-blockly-js-editor/node_modules/blockly/lib/_soy/soyutils.js').soy;
 
 // This file was automatically generated from template.soy.
 // Please don't edit this file by hand.

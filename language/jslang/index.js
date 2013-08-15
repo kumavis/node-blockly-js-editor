@@ -29,8 +29,7 @@ module.exports = function(Blockly) {
   // Define Blocks and Generators
   require('./jslang_etc.js')(Blockly,patternMatch)
   require('./jslang_try_catch.js')(Blockly,patternMatch)
-  //require('./jslang_call.js')(Blockly,patternMatch)
-  require('./jslang_call_two.js')(Blockly,patternMatch)
+  require('./jslang_call.js')(Blockly,patternMatch)
   require('./jslang_member.js')(Blockly,patternMatch)
   require('./jslang_var.js')(Blockly,patternMatch)
   require('./jslang_object.js')(Blockly,patternMatch)
@@ -41,5 +40,6 @@ module.exports = function(Blockly) {
   require('./jslang_unary.js')(Blockly,patternMatch)
   require('./jslang_binary.js')(Blockly,patternMatch)
   require('./jslang_this.js')(Blockly,patternMatch)
+  require('./jslang_logical.js')(Blockly,patternMatch)
 
 }

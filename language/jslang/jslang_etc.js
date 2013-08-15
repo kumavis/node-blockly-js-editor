@@ -7,8 +7,8 @@ module.exports = function(Blockly,patternMatch) {
   // = Block Definition
   // ===
 
-  // for using a MemberExpression as a statement
-  // TODO: this is ugly
+  // for using an Expression as a Statement
+  // TODO: this is a horrible thing to expect from your users
   Blockly.core.Language.jslang_statement_nub = {
     helpUrl: '',
     init: function() {
@@ -28,7 +28,7 @@ module.exports = function(Blockly,patternMatch) {
       this.setColour(240);
       this.appendValueInput("CHAIN")
           .setCheck("null")
-          .appendTitle("object")
+          .appendTitle("get var")
           .appendTitle(new Blockly.core.FieldTextInput("prop"), "PROP");
       this.setOutput(true, "null");
       this.setTooltip('');

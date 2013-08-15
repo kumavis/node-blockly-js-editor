@@ -70,8 +70,13 @@ function registerBlockSignature(pattern, xmlGenerator) {
   signaturesForType.push({ pattern: pattern, xmlGenerator: xmlGenerator })
 }
 
+// NOTE: appendInNewTag and appendTagDeep are similar, but implemented fairly differently,
+//  and take different arguments, namely `tagName` and `args`
+// TODO: refactor
+
 // Appends the `child` to the `parent` inside a tag of type `tag` optionally with tag attributes `args`
 // Should be fast - we're not parsing the whole parent or child
+// args should be 'name="VAR"' not "VAR"
 function appendInNewTag(parent, child, tag, args) {
   // Ensure valid input
   if ((typeof parent !== 'string') || (typeof child !== 'string') || !tag) throw "`appendInNewTag` received invalid input: "+arguments

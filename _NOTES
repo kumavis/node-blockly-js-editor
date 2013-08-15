@@ -1,3 +1,7 @@
+// GOALS:
+// convert code to blocks, hiding exact syntax details in xml
+// convert blocks to code, reading exact syntax details from xml
+
 //  - block definition
 //  - code to block
 //  - block to code
@@ -29,10 +33,34 @@
 //    └─ kind: var
 //  
 //  ===
-//  == XML OBJ
+//  == XML OBJ (NAIVE AST)
 //  ===
 //  
+//    <row type="VariableDeclaration" kind="var">
+//        <declarations type="VariableDeclarator">
+//            <id type="Identifier" name="x" />
+//            <init type="Literal" value="10" raw="'10'" />
+//        </declarations>
+//    </row>
+//
+//
+//  ===
+//  == XML OBJ (TARGET OBJ)
+//  ===
 //  
+//    └─ block
+//       ├─ type: jslang_var
+//       ├─ inline: false
+//       ├─ x: 0
+//       ├─ y: 0
+//       └─ title
+//          ├─ name: VAR
+//          └─ $t: x
+//
+//  ===
+//  == XML OBJ
+//  ===
+//
 //  
 //  ===
 //  == XML
@@ -48,7 +76,7 @@ var escodegen = require('escodegen')
 var xmlMapping = require('xml-mapping')
 var html = require("html");
 
-var targetXml = '<block type="jslang_var" inline="false" x="0" y="0"><title name="VAR">x</title></block>'
+var targetXml = '<block type="jslang_var" inline="false">    <title name="VAR">x</title>    <value name="CHAIN">      <block type="math_number">        <title name="NUM">10</title>      </block>    </value>  </block>'
 
 var src = "var x = \'10\'"
 
@@ -74,12 +102,76 @@ output()
 output( '--- ast' )
 output( treeify.asTree(syntax,true) )
 output()
-output( '--- naive xml' )
-output( html.prettyPrint(xmlMapping.dump(syntax)) )
+// output( '--- naive ast xml' )
+// output( html.prettyPrint(xmlMapping.dump(syntax)) )
+// output()
+output( '--- target xml obj' )
+output( treeify.asTree(xmlMapping.load(targetXml),true) )
 output()
 output( '--- target xml' )
 output( html.prettyPrint(targetXml) )
+output()
+// output( '--- target xml recode' )
+// output( html.prettyPrint(xmlMapping.dump(xmlMapping.load(targetXml))) )
+// output()
 
+var testObj = {
+  block: {
+    type: 'jslang_var',       // [A] block_def
+    inline: false,            // [A] block_def.viz
+    title: [{                 // [A] block_def.viz
+      name: 'VAR',            // [A] block_def.viz
+      $t: 'x',                // [A] block_def.ast
+    }],
+    value: [{                 // [A] block_def.viz
+      name: 'CHAIN',          // [A] block_def.viz
+      block: {                // [A] block_def.ast
+        type: 'math_number',  // [B] block_def
+        title: {              // [B] block_def.viz
+          name: 'NUM',        // [B] block_def.viz
+          $t: 10,             // [B] block_def.ast
+        }
+      },
+    }],
+  },
+}
 
+// ├─ type: VariableDeclaration
+// ├─ declarations
+// │  └─ 0
+// │     ├─ type: VariableDeclarator
+// │     ├─ id
+// │     │  ├─ type: Identifier
+// │     │  └─ name: x
+// │     └─ init
+// │        ├─ type: Literal
+// │        ├─ value: 10
+// │        └─ raw: '10'
+// └─ kind: var
 
+// └─ xml
+//    └─ block
+//       ├─ type: jslang_var
+//       ├─ inline: false
+//       ├─ x: 0
+//       ├─ y: 0
+//       ├─ title
+//       │  ├─ name: VAR
+//       │  └─ $t: x
+//       └─ value
+//          ├─ name: CHAIN
+//          └─ block
+//             ├─ type: math_number
+//             └─ title
+//                ├─ name: NUM
+//                └─ $t: 10
+
+output( '--- test xml obj' )
+output( treeify.asTree(testObj,true) )
+output()
+output( '--- test xml' )
+output( html.prettyPrint(xmlMapping.dump(testObj)) )
+output()
+output( '--- match?' )
+output( html.prettyPrint(xmlMapping.dump(testObj)) == html.prettyPrint(targetXml) )
 

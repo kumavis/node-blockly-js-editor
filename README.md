@@ -1,5 +1,5 @@
 #Bloccoli
-![Bloccoli Logo](media/broccoli-1.jpg)
+![Bloccoli Logo](media/broccoli-logo1.png)
 =====
 
 A Blockly-CodeMirror hybrid javascript editor

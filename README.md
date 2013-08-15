@@ -1,12 +1,14 @@
-About
+#Bloccoli
+##Blocks to Javascript and Back Again
+###Built on [Blockly](https://code.google.com/p/blockly/) & [CodeMirror](http://codemirror.net/)
+![Bloccoli Logo](media/broccoli-logo1.png)
 =====
-
-A Blockly-CodeMirror hybrid javascript editor
 
 Project Status
 =====
 
 soo WIP
+Syntax incomplete, [here's what needs to be done.](_TODO)
 
 Setup
 =====

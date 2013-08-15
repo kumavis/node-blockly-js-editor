@@ -1,6 +1,6 @@
 #Bloccoli
 ##Blocks to Javascript and Back Again
-###Built on [Blockly](https://code.google.com/p/blockly/) & [CodeMirror](http://codemirror.net/)
+###Built on [Blockly](2) & [CodeMirror](3)
 ![Bloccoli Logo](media/broccoli-logo1.png)
 =====
 
@@ -8,6 +8,7 @@ Project Status
 =====
 
 soo WIP
+
 Syntax incomplete, [here's what needs to be done.](_TODO)
 
 Setup
@@ -15,9 +16,9 @@ Setup
 
 This is a node project. You will need [node](0) and [npm](1) installed.
 
-1. clone the repo
+1. clone the repo and cd into the dir
 ```bash
-git clone git@github.com:kumavis/node-blockly-js-editor.git
+git clone git@github.com:kumavis/node-blockly-js-editor.git && cd node-blockly-js-editor
 ```
 
 1. install beefy globally
@@ -29,8 +30,6 @@ npm install -g beefy
 ```bash
 npm install
 ```
-
-1. make sure nothing is running on port 8000
 
 1. start the app
 ```bash
@@ -44,3 +43,5 @@ use `node compile_soy.js` if you make a change to the template in `templates/tem
 
 [0]: http://nodejs.org/
 [1]: https://npmjs.org/
+[2]: https://code.google.com/p/blockly/
+[3]: http://codemirror.net/

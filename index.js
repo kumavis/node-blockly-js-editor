@@ -171,7 +171,6 @@ Blockly.onBlocklyChange = function() {
   {
     Blockly.ignoreNextBlocklyChange = false
   } else {
-    console.log('updating code from blocks')
     Blockly.ignoreNextJsChange = true
     Blockly.setCode(Blockly.core.Generator.workspaceToCode('JavaScript'))
   }
@@ -182,7 +181,6 @@ Blockly.onJsChange = function() {
   if (Blockly.ignoreNextJsChange) {
     Blockly.ignoreNextJsChange = false
   } else {
-    console.log('updating blocks from code')
     Blockly.ignoreNextBlocklyChange = true
     // Code to Blocks
     var jsText = Blockly.getCode();

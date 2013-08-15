@@ -33,16 +33,19 @@ requireBin integration
   [ ] BreakStatement
   [ ] CatchClause
   [ ] ConditionalExpression      ***
+    # a ? b : c
   [ ] ContinueStatement
   [ ] DoWhileStatement      ***
   [ ] DebuggerStatement
   [ ] EmptyStatement
-  [ ] ForStatement
+  [ ] ForStatement         ***
   [ ] ForInStatement
   [ ] FunctionDeclaration      ***
+    [ ] named
+    [✓] anon
   [ ] LabeledStatement
   [ ] LogicalExpression     ***
-   [ ] && ||
+   [✓] && ||
   [ ] NewExpression      ***
   [ ] Property
   [ ] SequenceExpression
@@ -55,7 +58,9 @@ requireBin integration
     [ ] - +
     [✓] !
   [ ] UpdateExpression      ***
-    [ ] ++ --
+    [ ] ++a --a
+    [ ] a++ a--
+    [ ] += -= *= /=
   [✓] VariableDeclarator
   [ ] WhileStatement
   [ ] WithStatement

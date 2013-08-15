@@ -69,11 +69,12 @@ module.exports = function(Blockly,patternMatch) {
   //
   // eg: "var world = hello()"
 
-  Blockly.core.JavaScript.node_require = function() {
+  Blockly.core.JavaScript.node_on = function() {
     var value_chain = Blockly.core.JavaScript.valueToCode(this, 'CHAIN', Blockly.core.JavaScript.ORDER_ATOMIC);
-    var text_module = this.getTitleValue('MODULE');
+    var value_func = Blockly.core.JavaScript.valueToCode(this, 'FUNC', Blockly.core.JavaScript.ORDER_ATOMIC);
+    var text_event = this.getTitleValue('EVENT');
     // Assemble JavaScript into code variable.
-    var code = "require('"+text_module+"')"
+    var code = ".on('"+text_event+"',"+value_func+")"
     if (value_chain) code += value_chain
     return [code,Blockly.core.JavaScript.ORDER_NONE]
   };

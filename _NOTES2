@@ -1,90 +1,16 @@
-<xml>
+var through = require('through')
+require('pipechain').install()
 
-  <block type="jslang_statement_nub" inline="false" x="0" y="0">
-  </block>
+var a = through(function(data) {
+  this.queue(data.toString().toUpperCase())
+})
 
-  <block type="jslang_identifier" inline="false" x="0" y="0">
+var b = through(function(data) {
+  this.queue(data.split('-').join(','))
+})
 
-    <title name="PROP">
-    X</title>
+var c = through(function(data) {
+  this.queue(data.toString().split('').reverse().join(''))
+})
 
-  </block>
-
-  <block type="jslang_call" inline="false" x="0" y="0">
-
-    <mutation items="3"></mutation>
-    <value name="CHAIN">
-      <block type="jslang_member_chain" inline="false">
-        <title name="PROP">toString</title>
-      </block>
-    </value>
-    <value name="ARG0">
-      <block type="jslang_identifier" inline="false">
-        <title name="PROP">a</title>
-      </block>
-    </value>
-    <value name="ARG1">
-      <block type="jslang_identifier" inline="false">
-        <title name="PROP">b</title>
-      </block>
-    </value>
-    <value name="ARG2">
-      <block type="jslang_identifier" inline="false">
-        <title name="PROP">c</title>
-      </block>
-    </value>
-  </block>
-  <block type="jslang_call" inline="false" x="0" y="0">
-    <mutation items="0"></mutation>
-  </block>
-</xml> 
-
-<xml>
-   <block type="jslang_statement_nub">
-   <value name="CHAIN">
-      <block type="jslang_identifier">
-      <title name="PROP">
-         X
-      </title>
-      <value name="CHAIN">
-         <block type="jslang_call">
-         <mutation items="3"/>
-         <value name="ARG0">
-            <block type="jslang_identifier">
-            <title name="PROP">
-               a
-            </title>
-            </block>
-         </value>
-         <value name="ARG1">
-            <block type="jslang_identifier">
-            <title name="PROP">
-               b
-            </title>
-            </block>
-         </value>
-         <value name="ARG2">
-            <block type="jslang_identifier">
-            <title name="PROP">
-               c
-            </title>
-            </block>
-         </value>
-         <value name="CHAIN">
-            <block type="jslang_member_chain">
-            <title name="PROP">
-               toString
-            </title>
-            </block>
-         </value>
-         <value name="CHAIN">
-            <block type="jslang_call">
-            <mutation items="0"/>
-            </block>
-         </value>
-         </block>
-      </value>
-      </block>
-   </value>
-   </block>
-</xml>
+process.stdin | c | process.stdout

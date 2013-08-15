@@ -8,6 +8,7 @@ Project Status
 =====
 
 soo WIP
+Syntax incomplete, [here's what needs to be done.](_TODO)
 
 Setup
 =====

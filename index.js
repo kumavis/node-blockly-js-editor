@@ -126,7 +126,7 @@ Blockly.getCode = function() {
   return Blockly.editor.getValue()
 }
 Blockly.refresh = function(newCode) {
-  Blockly.editor.refresh()
+  Blockly.editor.editor.refresh()
 }
 
 Blockly.toggleToolbox = function(){

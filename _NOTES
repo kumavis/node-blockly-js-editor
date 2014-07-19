@@ -12,8 +12,8 @@
 //    - block to ast
 //  
 //  
-//    block -> xml -> xmlObj [->] ast
-//    ast [->] xmlObj -> xml -> block
+//    block -> xml -> xmlObj [->] ast -> js
+//    js -> ast [->] xmlObj -> xml -> block
 //  
 //  ===
 //  == AST

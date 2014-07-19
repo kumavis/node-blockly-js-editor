@@ -14,8 +14,8 @@
     "soynode": "~0.3.0"
   },
   "dependencies": {
-    "blockly": "git://github.com/kumavis/node-blockly.git#master",
-    "javascript-editor": "git://github.com/maxogden/javascript-editor.git#master",
+    "blockly": "git://github.com/kumavis/node-blockly.git#a6c89b9f783a4041564e38def3280d3c476838ea",
+    "javascript-editor": "git://github.com/maxogden/javascript-editor.git#c2084f4a474627d359dbd55e86570b371b484a30",
     "pattern-match": "~0.3.0",
     "treeify": "~1.0.1",
     "esprima": "~1.0.3",

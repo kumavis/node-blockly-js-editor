@@ -20,14 +20,14 @@ var treeify = require('treeify')
 var esprima = require('esprima')
 
 //  Blockly Core Deps
-var initBlocklyCore = require('./node_modules/blockly/lib/blockly_compressed.js')
-var MSG = require('./node_modules/blockly/lib/MSG.js')
-var code_app = require('./node_modules/blockly/lib/code.js')
-var initEnglish = require('./node_modules/blockly/lib/en_compressed.js')
+var initBlocklyCore = require('blockly/lib/blockly_compressed.js')
+var MSG = require('blockly/lib/MSG.js')
+var code_app = require('blockly/lib/code.js')
+var initEnglish = require('blockly/lib/en_compressed.js')
 
 //  Blockly JSEditor Deps
 var blocklyTemplate = require('./templates/template.soy.js')
-var initCoreJs = require('./node_modules/blockly/lib/javascript_compressed.js')
+var initCoreJs = require('blockly/lib/javascript_compressed.js')
 var initLanguageBlocks = require('./language/config.js')
 Blockly.util = require('./util.js')
 

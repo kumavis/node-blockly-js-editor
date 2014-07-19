@@ -210,8 +210,7 @@ Blockly.onJsChange = function() {
 
 function injectStyles(styles) {
   styles.forEach(function(cssFile) {
-    var pathname = path.join(__dirname,cssFile)
-    injectStyle( pathname )
+    injectStyle( cssFile )
   })
 }
 

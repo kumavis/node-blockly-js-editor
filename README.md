@@ -1,6 +1,6 @@
 #Bloccoli
 ##Blocks to Javascript and Back Again
-###Built on [Blockly](2) & [CodeMirror](3)
+###Built on [Blockly][2] & [CodeMirror][3]
 ![Bloccoli Logo](media/broccoli-logo1.png)
 =====
 
@@ -14,7 +14,7 @@ Syntax incomplete, [here's what needs to be done.](_TODO)
 Setup
 =====
 
-This is a node project. You will need [node](0) and [npm](1) installed.
+This is a node project. You will need [node][0] and [npm][1] installed.
 
 1. clone the repo and cd into the dir
 ```bash

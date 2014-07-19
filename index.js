@@ -37,6 +37,8 @@ window.Blockly = Blockly;
 // Called by consumer to insert the workspace into the DOM
 Blockly.injectWorkspace = function( options ) {
 
+  Blockly.assetPrefix = options.assetPrefix
+
   // Set Defaults
   var targetElement = options.targetElement || document.body
 
@@ -67,9 +69,9 @@ Blockly.injectWorkspace = function( options ) {
 // Called from workspace iframe when ready
 Blockly.init = function(frameWindow) {
   Blockly.core = initBlocklyCore(frameWindow)
-  initCoreJs(frameWindow,Blockly.core)
-  initWorkspace(frameWindow,Blockly.core)
-  initEnglish(frameWindow,Blockly.core)
+  initCoreJs(frameWindow, Blockly.core)
+  initWorkspace(frameWindow, Blockly.core)
+  initEnglish(frameWindow, Blockly.core)
   // Initialize basic JS Language definitions (Blocks + Generators)
   initLanguageBlocks(Blockly)
 
@@ -234,9 +236,10 @@ function initWorkspace(window,Blockly) {
       rtl = window.parent.document.body.parentNode.dir == 'rtl';
       toolbox = window.parent.document.getElementById('toolbox');
     }
-    Blockly.inject(document.body,
-        {path: '../../',
-         rtl: rtl,
-         toolbox: toolbox});
+    Blockly.inject(document.body, {
+      path: Blockly.assetPrefix,
+      rtl: rtl,
+      toolbox: toolbox
+    });
   }).bind(window)()
 }

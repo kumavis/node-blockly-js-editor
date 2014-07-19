@@ -4,8 +4,8 @@
   "description": "Write Javascript with Scratch-clone Blockly! or visa-versa!",
   "main": "index.js",
   "scripts": {
-    "start": "beefy example/example.js --open --live",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "beefy example/example.js:bundle.js --open --live",
+    "publish": "current_branch=\"`git rev-parse --abbrev-ref HEAD`\"; git branch -D gh-pages; git checkout -b gh-pages; browserify index.js -o bundle.js; git add -A; git commit -m 'New Build'; git push -f origin gh-pages; git checkout $current_branch"
   },
   "repository": "https://github.com/kumavis/node-blockly-js-editor",
   "author": "kumavis",

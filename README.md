@@ -1,6 +1,8 @@
 #Bloccoli
 ##Blocks to Javascript and Back Again
 ###Built on [Blockly][2] & [CodeMirror][3]
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/kumavis/node-blockly-js-editor.svg)](https://greenkeeper.io/)
 ![Bloccoli Logo](media/broccoli-logo1.png)
 =====
 
